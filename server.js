@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="Aqflmpcwc83y7peDCmpvQpJXEAZOE_PWUZ4JGY-qsGw" " />
 <title>MediaForge Downloader</title>
+<script src="https://quge5.com/88/tag.min.js" data-zone="275315" async data-cfasync="false"></script>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
 body { background: #0f172a; color: #f8fafc; display: flex; justify-content: center; padding: 20px 10px; min-height: 100vh; align-items: center; }
