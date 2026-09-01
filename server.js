@@ -69,23 +69,26 @@ function startDownload() {
 });
 
 app.post('/download', (req, res) => {
-    let rawUrl = req.body.url ? req.body.url.trim() : '';
-    let format = req.body.format || 'mp4';
+  let rawUrl = req.body.url ? req.body.url.trim() : '';
+  let format = req.body.format || 'mp4';
 
-    if (!rawUrl) return res.json({ url: null });
+  if (!rawUrl) return res.json({ url: null });
 
-    let cleanUrl = rawUrl.split('?')[0];
+  let cleanUrl = rawUrl.split('?')[0];
+  const fmt = format === 'mp3' ? 'ba/best' : 'b[ext=mp4]/best';
 
-    const fmt = format === 'mp3' ? 'ba/best' : 'b[ext=mp4]/best';
-    const pythonCmd = `python -c "import yt_dlp; ydl = yt_dlp.YoutubeDL({'format': '${fmt}', 'quiet': True, 'no_warnings': True, 'extractor_args': {'youtube': {'player_client': ['android', 'web']}}}); info = ydl.extract_info('${cleanUrl}', download=False); print(info.get('url', ''))"`;
+  // Using python3 with yt-dlp -g flag to fetch direct media URL cleanly
+  const pythonCmd = `python3 -m yt_dlp -g -f "${fmt}" "${cleanUrl}"`;
 
-    exec(pythonCmd, { timeout: 15000 }, (error, stdout) => {
-        if (!error && stdout.trim() && stdout.trim().startsWith('http')) {
-            return res.json({ url: stdout.trim() });
-        }
-        return res.json({ url: null });
-    });
+  exec(pythonCmd, { timeout: 15000 }, (error, stdout) => {
+    if (!error && stdout.trim()) {
+      const directUrl = stdout.trim().split('\n')[0];
+      return res.json({ url: directUrl });
+    }
+    return res.json({ url: null });
+  });
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log('Downloader running on port ' + PORT));
