@@ -8,6 +8,7 @@ app.get('/', (req, res) => {
     res.send(`<!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="monetag" content="fa1d2f80893f5a2879c3d3ad6b01026a">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="Aqflmpcwc83y7peDCmpvQpJXEAZOE_PWUZ4JGY-qsGw" " />
 <title>MediaForge Downloader</title>
